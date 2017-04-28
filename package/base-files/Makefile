@@ -9,6 +9,7 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/version.mk
+include $(INCLUDE_DIR)/baseconf.mk
 
 PKG_NAME:=base-files
 PKG_RELEASE:=172
@@ -134,6 +135,11 @@ define Package/base-files/install
 		$(1)/sbin/hotplug-call \
 		$(1)/etc/preinit \
 		$(1)/etc/profile
+
+	$(if $(filter $(BASECONF_ROOT_PASSWORD),x), \
+		$(SED) 's/%P/x/g' $(1)/etc/shadow, \
+		$(SED) 's/%P/$(shell $(OPENSSL) passwd -1 $(BASECONF_ROOT_PASSWORD) | $(SED_PLAIN) -e 's/[/.$$^]/\\&/g' | $(SED_PLAIN) -e 's/\$$/\$$\$$/g')/' $(1)/etc/shadow \
+	)
 
 	mkdir -p $(1)/CONTROL
 	mkdir -p $(1)/dev

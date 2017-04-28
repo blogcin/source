@@ -291,4 +291,18 @@ menuconfig PER_FEED_REPO
 		help
 		  Add not enabled feeds as commented out source lines to opkg.conf.
 
+
+menuconfig BASECONFOPT
+	bool "Base system configurations" if IMAGEOPT
+	default n
+	help
+		In here you can set configurations like a default root password.
+		They are suppose to be very basic and default settings to the vanilla OpenWRT firmware.
+
+	config BASECONF_ROOT_PASSWORD
+		string
+		prompt "Custom default root password" if BASECONFOPT
+		help
+		Usually the firmware does not have the root password set.
+		Here you can set a default one, that will be in effect even after a factory reset.
 source "tmp/.config-feeds.in"

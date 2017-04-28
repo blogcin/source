@@ -262,10 +262,12 @@ BUILD_KEY=$(TOPDIR)/key-build
 TARGET_CC:=$(TARGET_CROSS)gcc
 TARGET_CXX:=$(TARGET_CROSS)g++
 KPATCH:=$(SCRIPT_DIR)/patch-kernel.sh
+SED_PLAIN:=$(STAGING_DIR_HOST)/bin/sed
 SED:=$(STAGING_DIR_HOST)/bin/sed -i -e
 CP:=cp -fpR
 LN:=ln -sf
 XARGS:=xargs -r
+OPENSSL:=openssl
 
 BASH:=bash
 TAR:=tar
